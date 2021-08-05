@@ -1,0 +1,25 @@
+USER thì hiển thị được nhưng đơn hàng thành viên đã đặt
+
+Đổi mật khẩu của của admin 
+
+Kiểm tra đăng nhập rồi với cho đặt hàng này
+Nếu không đăng nhập thì chuyển về trang đặt hàng
+Show trạng thái đơn hàng ra  bên ngoài
+
+Frontend
+Thông tin của người mua hàng bên ngoài Frontend;
+Đổi mật khẩu ở bên ngoài Frontend;
+Trạng thái đơn hàng
+thông tin tài khoản
+Tạo id_user trong orderdetail để lấy được thông tin người mua hàng
+
+
+Đăng kí --
+Tìm kiếm sản phẩm bên ngoài Frontend
+lấy sản phẩm theo tag
+
+
+laravel schedule
+laravel events
+laravel echo serve
+server
