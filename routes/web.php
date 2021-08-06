@@ -3,12 +3,14 @@
 
 use App\Http\Controllers\AdminCategoriesController;
 use App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminSettingController;
 use App\Http\Controllers\AdminSliderController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomeController as FrontendHomeController;
 use App\Http\Controllers\Frontend\MyaccountController;
+use App\Http\Controllers\Frontend\PostsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Models\Slider;
@@ -73,8 +75,6 @@ Route::get('/shop/product-tag/{id}', [FrontendHomeController::class, 'productTag
 // Phần search sản phẩm bên ngoài frontend
 Route::post('/search-product', [FrontendHomeController::class, 'shop'])->name('search');
 
-
-
 // Phần thông tin tài khoản bên ngoài front end 
 Route::get('/my-account/{id}', [MyaccountController::class, 'index'])->name('my.account')->middleware('auth');
 Route::post('/my-account/change-pasword/{id}', [MyaccountController::class, 'changPassfe'])->name('changepassword')->middleware('auth');;
@@ -91,10 +91,14 @@ Route::get('/checkout', [CartController::class, 'checkOut'])->name('checkout')->
 Route::post('/checkout-post', [CartController::class, 'postcheckOut'])->name('postcheckout')->middleware('auth');;
 Route::get('/checkout/bill', [CartController::class, 'viewBill'])->name('bill')->middleware('auth');;
 
+/// đặt hàng
+Route::get('/posts/detail/{id}', [PostsController::class, 'detailPost'])->name('posts.detail');
+Route::get('/posts', [PostsController::class, 'postList'])->name('posts.list');
+Route::get('/aboutus', [PostsController::class, 'aboutus'])->name('aboutus');
 
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+
+
+
 
 Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::post('/login', [HomeController::class, 'postLogin'])->name('postlogin');
@@ -111,6 +115,9 @@ Route::any('/logout', function(){
     Auth::logout();
     return redirect()->route('login');
 })->name('logout');
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 
 Route::prefix('admin' )->middleware('auth')->group(function(){
 
@@ -174,5 +181,15 @@ Route::prefix('admin' )->middleware('auth')->group(function(){
         Route::get('/delete/{id}', [AdminOrderController::class, 'delete'])->name('orders.delete');
         Route::post('/searchProduct', [AdminOrderController::class, "searchProduct"])->name('searchProduct');
         Route::post('/ajaxSingleProduct', [AdminOrderController::class, "ajaxSingleProduct"])->name('ajaxSingleProduct');
+    });
+    
+
+    Route::prefix('posts')->group(function(){
+        Route::get('/', [AdminPostController::class, 'index'])->name('posts');
+        Route::get('/add', [AdminPostController::class, 'add'])->name('posts.add');
+        Route::post('/store', [AdminPostController::class, 'store'])->name('posts.store');
+        Route::get('/edit/{id}', [AdminPostController::class, 'edit'])->name('posts.edit');
+        Route::post('/update/{id}', [AdminPostController::class, 'update'])->name('posts.update');
+        Route::get('/delete/{id}', [AdminPostController::class, 'delete'])->name('posts.delete');
     });
 });

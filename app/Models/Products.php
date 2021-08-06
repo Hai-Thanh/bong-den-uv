@@ -20,7 +20,6 @@ class Products extends Model
     public function imageMutiple(){
         return $this->hasMany(ProductImage::class , 'product_id');
     }
-
     
     public function tagsMutiple(){
         return $this->belongsToMany(Tag::class, 'product_tag' , 'product_id', 'tag_id')->withTimestamps();

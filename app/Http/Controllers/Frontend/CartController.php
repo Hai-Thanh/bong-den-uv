@@ -43,7 +43,6 @@ class CartController extends Controller
         return view('frontend.carts.carts', compact('carts'));
     }
 
-
     public function cartDelete(Request $request)
     {
         if ($request->id) {
@@ -55,7 +54,6 @@ class CartController extends Controller
             return response()->json(['cartComponents' => $cartComponents, 'code' => 200], 200);
         }
     }
-
 
     public function cartUpdate(Request $request)
     {
@@ -71,7 +69,6 @@ class CartController extends Controller
 
     public function addCartDetail(Request $request, $id)
     {
-
         $carts = session()->get('cart');
         $product = Products::find($id);
         if (isset($carts[$id])) {

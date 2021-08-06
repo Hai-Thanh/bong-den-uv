@@ -26,14 +26,14 @@
                                         <!-- Mega Menu -->
                                     </li>
                                     <li class="has-dropdown">
-                                        <a href="blog-single-sidebar-left.html">Blog </a>
+                                        <a href="{{ route('posts.list') }}">Blog </a>
                                         <!-- Sub Menu -->
                                     </li>
                                     <li>
-                                        <a href="about-us.html">About Us</a>
+                                        <a href="{{ route('aboutus') }}">About Us</a>
                                     </li>
                                     <li>
-                                        <a href="contact-us.html">Contact Us</a>
+                                        <a href="contact-us">Contact Us</a>
                                     </li>
 
                                     @if (Auth::check())

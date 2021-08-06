@@ -44,8 +44,7 @@ $(function () {
     }
   };
 
-  tinymce.init(editor_config);
-
+  // tinymce.init(editor_config);
 })
 
 

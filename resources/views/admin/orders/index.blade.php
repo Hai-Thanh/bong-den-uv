@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Sản phẩm')
+@section('title', 'Thông tin đơn hàng')
 @section('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('admins/main.js') }}"></script>

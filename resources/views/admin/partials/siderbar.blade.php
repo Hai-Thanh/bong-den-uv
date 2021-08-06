@@ -70,6 +70,13 @@
             <span>Đơn hàng</span>
           </a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link {{ Route::currentRouteNamed('posts*') ? 'active' : '' }} "  href="{{ route('posts') }}">
+            <i class="fab fa-product-hunt"></i>
+            <span>Bài viết</span>
+          </a>
+        </li>
         
  
       </ul>

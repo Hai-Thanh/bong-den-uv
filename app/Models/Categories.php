@@ -13,7 +13,6 @@ class Categories extends Model
     protected $primaryKey = 'id';
     protected $guarded = [];
 
-
     // Quan hệ category->product;... từ bảng cha đến bảng con .
     public function products(){
         return $this->hasMany(Products::class, 'category_id');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Categories;
+use App\Models\Posts;
 use App\Models\Products;
 use App\Models\Slider;
 use App\Models\Tag;
@@ -13,12 +14,13 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     
-    public function __construct(Slider $slider , Categories $categories, Products $products , Tag $tag)
+    public function __construct(Slider $slider , Categories $categories, Products $products , Tag $tag, Posts $posts)
     {
         $this->slider = $slider;
         $this->categories = $categories;
         $this->products = $products;
         $this->tag = $tag;
+        $this->posts = $posts;
         
     }
     public function index(){
@@ -27,7 +29,8 @@ class HomeController extends Controller
         $categories= $this->categories->orderBy('id' ,'desc')->take(4)->get();
         $productsnew = $this->products->orderBy('id' ,'asc')->take(12)->get();
         $productbestsellers = $this->products->orderBy('id', 'desc')->take(8)->get();
-        return view('frontend.home.home',compact('sliders','categories','productbestsellers','productsnew'));
+        $posts = $this->posts->orderBy('id' , 'asc')->take(6)->get();
+        return view('frontend.home.home',compact('sliders','categories','productbestsellers', 'posts','productsnew'));
     }
 
     public function shop(Request $request){
@@ -61,16 +64,9 @@ class HomeController extends Controller
 
 
     public function productTag($id){
-
         $tag = $this->tag->find($id);
-
-
-        // $products = $this->products->where('category_id' , $id)->paginate(12);
-
-
         return view('frontend.products.product-tag' , compact('tag'));
     }
 
-  
 
 }
