@@ -17,10 +17,7 @@ class AdminSettingController extends Controller
 
 
     public function index(){
-
         $settings=   $this->setting->all();
-
-
         return view('admin.settings.index' , compact('settings'));
     }
 

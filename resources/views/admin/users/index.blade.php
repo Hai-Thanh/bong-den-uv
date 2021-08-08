@@ -34,11 +34,12 @@
                 <div class="card card-small mb-4">
                     <div class="card-header border-bottom">
                         <h6 class="m-0">Thành viên</h6>
-
+                        @can('view user')
                         <a class="nav-link " href="{{ route('users.add') }}">
                             <i class="material-icons">note_add</i>
                             <span>Add New User</span>
                         </a>
+                        @endcan
                     </div>
                     <br>
                     <form name="search_product" method="get" action="">
@@ -90,8 +91,17 @@
                                         <td><img src="{{ $user->avatar }}" width="230px" height="230px" alt=""></td>
                                         <td>{{ $user->phone_number }}</td>
                                         <td>
-                                            <a href="{{ route('users.edit', [$user->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
-                                            <a href="" data-url="{{ route('delete.user', ['id' =>$user->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                                           
+                                            @if ($user->id != Auth::id())
+                                                @can('edit user')
+                                                <a href="{{ route('users.edit', [$user->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
+                                                @endcan
+                                                @can('delete user')
+                                                <a href="" data-url="{{ route('delete.user', ['id' =>$user->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                                                @endcan
+                                            @else
+                                              <a href="{{ route('user.change.password', ['id'=>Auth::id()]) }}" class="mb-2 btn btn-info mr-2 ">Đổi mật khẩu</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

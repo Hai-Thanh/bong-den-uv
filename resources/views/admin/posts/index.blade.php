@@ -23,11 +23,13 @@
       <div class="card card-small mb-4">
         <div class="card-header border-bottom">
           <h6 class="m-0">Bài viết</h6>
-          <a class="nav-link " href="{{ route('posts.add') }}">
-            <i class="material-icons">note_add</i>
-            <span>Add New Posts</span>
-          </a>
 
+          @can('add post')
+            <a class="nav-link " href="{{ route('posts.add') }}">
+              <i class="material-icons">note_add</i>
+              <span>Add New Posts</span>
+            </a>
+          @endcan
         </div>
         <div class="card-body p-0 pb-3 text-center">
           <table class="table mb-0">
@@ -49,8 +51,12 @@
                 <td><img src="{{ $post->image_path}}" width="250px" height="250px" alt=""></td>
                 <td>{{ $post->userPost->name }}</td>
                 <td>
-                  <a href="{{ route('posts.edit', [$post->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
+                  @can('edit post')
+                   <a href="{{ route('posts.edit', [$post->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
+                   @endcan
+                  @can('delete post')
                   <a href="" data-url="{{ route('posts.delete', ['id' =>$post->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                  @endcan
               </td>
               </tr>
               @endforeach

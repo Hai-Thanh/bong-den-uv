@@ -142,11 +142,9 @@
                                                             <select  name="role[]" class="form-control tags_select2"  multiple="multiple">
                                                                 @foreach ($role as   $roleItem)
                                                                    <option   
-
                                                                         @foreach ($user->roles  as  $rolesUse)
                                                                                 {{ $roleItem->id ==  $rolesUse->pivot->role_id ? "selected" : ""}}  
                                                                         @endforeach
-                                                                        
                                                                      value="{{ $roleItem->id }}"  >{{ $roleItem->name }}</option>
                                                                 @endforeach
                                                         

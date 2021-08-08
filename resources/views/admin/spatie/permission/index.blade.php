@@ -20,11 +20,12 @@
                 <div class="card card-small mb-4">
                     <div class="card-header border-bottom">
                         <h6 class="m-0">Permission</h6>
-
-                        <a class="nav-link " href="{{ route('permission.add') }}">
-                            <i class="material-icons">note_add</i>
-                            <span>Add Permission</span>
-                        </a>
+                        @can('add permissions')
+                            <a class="nav-link " href="{{ route('permission.add') }}">
+                                <i class="material-icons">note_add</i>
+                                <span>Add Permission</span>
+                            </a>
+                        @endcan
                     </div>
                     <br>
                 
@@ -44,8 +45,13 @@
                                     <td>{{ $permiss->id }}</td>
                                     <td>{{ $permiss->name }}</td>
                                     <td>
-                                        <a href="{{ route('permission.edit', [$permiss->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
-                                        <a href="" data-url="{{ route('permission.delete', ['id' =>$permiss->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+
+                                        @can('edit permissions')
+                                           <a href="{{ route('permission.edit', [$permiss->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
+                                        @endcan
+                                        @can('delete permissions')
+                                          <a href="" data-url="{{ route('permission.delete', ['id' =>$permiss->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

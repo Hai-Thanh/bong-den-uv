@@ -22,11 +22,12 @@
       <div class="card card-small mb-4">
         <div class="card-header border-bottom">
           <h6 class="m-0">Danh mục</h6>
-          <a class="nav-link " href="{{ route('slider.add') }}">
-            <i class="material-icons">note_add</i>
-            <span>Add New Slider</span>
-          </a>
-
+          @can('add slider')
+            <a class="nav-link " href="{{ route('slider.add') }}">
+              <i class="material-icons">note_add</i>
+              <span>Add New Slider</span>
+            </a>
+          @endcan
         </div>
         <div class="card-body p-0 pb-3 text-center">
           <table class="table mb-0">
@@ -48,8 +49,13 @@
                   <td>{{ $slider->descripiton }}</td>
                   <td><img src="{{$slider->image_path  }}" alt="{{$slider->image_name }}" width="230" height="230" ></td>
                   <td>
+                    @can('edit slider')
                     <a href="{{ route('slider.edit', ['id' =>$slider->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
-                    <a href="" data-url="{{ route('slider.delete', ['id' =>$slider->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                   @endcan
+                   
+                   @can('delete slider')
+                   <a href="" data-url="{{ route('slider.delete', ['id' =>$slider->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                    @endcan
                   </td>
                 </tr>
               

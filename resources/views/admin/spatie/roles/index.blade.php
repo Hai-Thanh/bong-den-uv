@@ -20,11 +20,12 @@
                 <div class="card card-small mb-4">
                     <div class="card-header border-bottom">
                         <h6 class="m-0">role</h6>
-
-                        <a class="nav-link " href="{{ route('role.add') }}">
-                            <i class="material-icons">note_add</i>
-                            <span>Add role</span>
-                        </a>
+                        @can('view role')
+                            <a class="nav-link " href="{{ route('role.add') }}">
+                                <i class="material-icons">note_add</i>
+                                <span>Add role</span>
+                            </a>
+                        @endcan
                     </div>
                     <br>
                     <div class="card-body p-0 pb-3 text-center">
@@ -43,8 +44,12 @@
                                     <td>{{ $role->id }}</td>
                                     <td>{{ $role->name }}</td>
                                     <td>
+                                        @can('edit role')
                                         <a href="{{ route('role.edit', [$role->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
+                                        @endcan
+                                        @can('delete role')  
                                         <a href="" data-url="{{ route('role.delete', ['id' =>$role->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

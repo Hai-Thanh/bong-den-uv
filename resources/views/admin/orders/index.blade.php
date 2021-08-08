@@ -21,11 +21,12 @@
                 <div class="card card-small mb-4">
                     <div class="card-header border-bottom">
                         <h6 class="m-0">Thành viên</h6>
-
-                        <a class="nav-link " href="{{ route('orders.add') }}">
-                            <i class="material-icons">note_add</i>
-                            <span>Add Order</span>
-                        </a>
+                        @can('add order')
+                            <a class="nav-link " href="{{ route('orders.add') }}">
+                                <i class="material-icons">note_add</i>
+                                <span>Add Order</span>
+                            </a>
+                        @endcan
                     </div>
                
                     <div class="card-body p-0 pb-3 text-center">
@@ -75,8 +76,13 @@
                                         @endforeach
                                      </td>
                                     <td>
+                                        @can('edit order')
                                         <a href="{{ route('orders.edit',['id' => $order->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
+                                        @endcan
+
+                                        @can('delete order')
                                         <a href="" data-url="{{ route('orders.delete', ['id' =>$order->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                                        @endcan
                                     </td>
 
                                 </tr>

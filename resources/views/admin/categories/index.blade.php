@@ -23,11 +23,12 @@
       <div class="card card-small mb-4">
         <div class="card-header border-bottom">
           <h6 class="m-0">Danh mục   {{ $schoolname }}</h6>
+          @can('add categories')
           <a class="nav-link " href="{{ route('add_cate') }}">
             <i class="material-icons">note_add</i>
             <span>Add New Category</span>
           </a>
-
+        @endcan
         </div>
         <div class="card-body p-0 pb-3 text-center">
           <table class="table mb-0">
@@ -51,8 +52,15 @@
                   
 
                   <td>
-                    <a href="{{ url("admin/categories/edit/$category->id") }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
-                    <a href="" data-url="{{ url("admin/categories/delete/$category->id") }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                    @can('edit categories')
+                      <a href="{{ url("admin/categories/edit/$category->id") }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
+                    @endcan
+                    
+
+                    @can('delete categories')
+                      <a href="" data-url="{{ url("admin/categories/delete/$category->id") }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                    @endcan
+
                   </td>
                 </tr>
               

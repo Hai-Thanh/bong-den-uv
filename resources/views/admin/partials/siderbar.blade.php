@@ -29,75 +29,97 @@
             <span>Dashboard</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link  {{ Route::currentRouteNamed('categories*') ? 'active' : '' }} "  href="{{ route('categories') }}">
-            <i class="material-icons">vertical_split</i>
-            <span>Danh mục sản phẩm</span>
-          </a>
-        </li>
 
+        @can('view categories')
+          <li class="nav-item">
+            <a class="nav-link  {{ Route::currentRouteNamed('categories*') ? 'active' : '' }} "  href="{{ route('categories') }}">
+              <i class="material-icons">vertical_split</i>
+              <span>Danh mục sản phẩm</span>
+            </a>
+          </li>
+        @endcan
+
+        @can('view product')
         <li class="nav-item">
           <a class="nav-link {{ Route::currentRouteNamed('products*') ? 'active' : '' }}"  href="{{ route('products') }}">
             <i class="fab fa-product-hunt"></i>
             <span>Sản phẩm</span>
           </a>
         </li>
-        
+        @endcan
+
+        @can('view user')
         <li class="nav-item">
           <a class="nav-link  {{ Route::currentRouteNamed('users*') ? 'active' : '' }}"  href="{{ route('users') }}">
             <i class="fab fa-product-hunt"></i>
             <span>Quản trị viên</span>
           </a>
         </li>
+        @endcan
         
+        @can('view slider')
         <li class="nav-item">
           <a class="nav-link {{ Route::currentRouteNamed('slider*') ? 'active' : '' }} "  href="{{ route('slider') }}">
             <i class="fab fa-product-hunt"></i>
             <span>Slide show</span>
           </a>
         </li>
+        @endcan
 
+        @can('view settings')
           <li class="nav-item">
           <a class="nav-link {{ Route::currentRouteNamed('setting*') ? 'active' : '' }}"    href="{{ route('setting') }}">
             <i class="fab fa-product-hunt"></i>
             <span>Settings</span>
           </a>
         </li>
+        @endcan
 
+        @can('view order')
         <li class="nav-item">
           <a class="nav-link {{ Route::currentRouteNamed('orders*') ? 'active' : '' }} "  href="{{ route('orders') }}">
             <i class="fab fa-product-hunt"></i>
             <span>Đơn hàng</span>
           </a>
         </li>
+        @endcan
 
+        @can('view post')
         <li class="nav-item">
           <a class="nav-link {{ Route::currentRouteNamed('posts*') ? 'active' : '' }} "  href="{{ route('posts') }}">
             <i class="fab fa-product-hunt"></i>
             <span>Bài viết</span>
           </a>
         </li>
+        @endcan
 
+        @can('view customer')
         <li class="nav-item">
           <a class="nav-link {{ Route::currentRouteNamed('customers*') ? 'active' : '' }} "  href="{{ route('customers') }}">
             <i class="fab fa-product-hunt"></i>
             <span>Khách hàng</span>
           </a>
         </li>
-        
+        @endcan
+
+        @can('view permissions')
         <li class="nav-item">
           <a class="nav-link {{ Route::currentRouteNamed('permission*') ? 'active' : '' }} "  href="{{ route('permission') }}">
             <i class="fab fa-product-hunt"></i>
             <span>Permission</span>
           </a>
         </li>
-        
+        @endcan
+
+        @can('view role')
         <li class="nav-item">
           <a class="nav-link {{ Route::currentRouteNamed('role*') ? 'active' : '' }} "  href="{{ route('role') }}">
             <i class="fab fa-product-hunt"></i>
             <span>Role</span>
           </a>
         </li>
+        @endcan
+
         
  
       </ul>

@@ -5,18 +5,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('admins/main.js') }}"></script>
 
-    <script>
-        $(document).ready(function() {
-            $("#clear-search").on("click", function(e) {
-                e.preventDefault();
-                $("input[name='user_name']").val("");
-                $("select[name='name_sort']").val('');
-                $("form[name='search_product']").trigger("submit");
-                // trigger kích hoạt sự kiện được chỉ định là các dữ liệu ở các ô input đã đc xóa và submit đi nó sẽ trống
-
-            });
-        })
-    </script>
+   
 
 
 @endsection
@@ -34,39 +23,15 @@
                 <div class="card card-small mb-4">
                     <div class="card-header border-bottom">
                         <h6 class="m-0">Khách hàng</h6>
-
-                        <a class="nav-link " href="{{ route('customers.add') }}">
-                            <i class="material-icons">note_add</i>
-                            <span>Add New Customer</span>
-                        </a>
+                        @can('add customer')
+                            <a class="nav-link " href="{{ route('customers.add') }}">
+                                <i class="material-icons">note_add</i>
+                                <span>Add New Customer</span>
+                            </a>
+                        @endcan
                     </div>
                     <br>
-                    {{-- <form name="search_product" method="get" action="">
-                        <div class="row">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                            <div class="col mb-4">
-                                <input type="text" class="form-control" name="user_name" placeholder="Tên sản phẩm"
-                                    value="{{ $keyword }}">
-                            </div>
-
-                            <div class="col mb-4">
-                                <select name="name_sort" class="form-control ">
-                                    <option>Sắp xếp...</option>
-
-                                    <option {{ $name_sort == '0' ? 'selected' : '' }}  value="0">Tên alphabet tăng dần</option>
-                                    <option {{ $name_sort == '1' ? 'selected' : '' }}   value="1">Tên alphabet giảm dần</option>
-
-                                </select>
-                            </div>
-                            <div class="col mb-4">
-                                <button type="submit" class="mb-2 btn btn-outline-success mr-2">Success</button>
-                                <a href="#" id="clear-search" class="mb-2 btn btn-outline-secondary mr-2">Secondary</a>
-                                <input type="hidden" name="page" value="1">
-                            </div>
-                        </div>
-
-                    </form> --}}
+              
                     <div class="card-body p-0 pb-3 text-center">
 
                         <table class="table mb-0">
@@ -90,8 +55,12 @@
                                         <td><img src="{{ $customer->avatar }}" width="230px" height="230px" alt=""></td>
                                         <td>{{ $customer->phone_number }}</td>
                                         <td>
+                                            @can('edit customer')
                                             <a href="{{ route('customers.edit', [$customer->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
+                                            @endcan
+                                            @can('delete customer')
                                             <a href="" data-url="{{ route('customers.delete', ['id' =>$customer->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

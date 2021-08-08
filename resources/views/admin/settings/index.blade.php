@@ -23,11 +23,12 @@
       <div class="card card-small mb-4">
         <div class="card-header border-bottom">
           <h6 class="m-0">Setting</h6>
-          <a class="nav-link " href="{{ route('setting.add') }}">
-            <i class="material-icons">note_add</i>
-            <span>Add Setting</span>
-          </a>
-
+          @can('view settings')
+            <a class="nav-link " href="{{ route('setting.add') }}">
+              <i class="material-icons">note_add</i>
+              <span>Add Setting</span>
+            </a>
+          @endcan
         </div>
         <div class="card-body p-0 pb-3 text-center">
           <table class="table mb-0">
@@ -47,8 +48,12 @@
                   <td>{{ $setting->config_key }}</td>
                   <td>{{ $setting->config_value }}</td>
                   <td>
-                    <a href="{{ route('setting.edit', ['id' =>$setting->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
-                    <a href="" data-url="{{ route('setting.delete', ['id' =>$setting->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                    @can('edit settings')
+                      <a href="{{ route('setting.edit', ['id' =>$setting->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>
+                    @endcan
+                    @can('delete settings')
+                      <a href="" data-url="{{ route('setting.delete', ['id' =>$setting->id]) }}" class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                    @endcan
                   </td>
               </tr>
               @endforeach
