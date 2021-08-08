@@ -77,6 +77,7 @@
                                     <th scope="col" class="border-0">Tên thành viên</th>
                                     <th scope="col" class="border-0">Email</th>
                                     <th scope="col" class="border-0">Ảnh</th>
+                                    <th scope="col" class="border-0">Quyền try cập</th>
                                     <th scope="col" class="border-0">Số điện thoại</th>
                                     <th scope="col" class="border-0">Action</th>
 
@@ -89,9 +90,13 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td><img src="{{ $user->avatar }}" width="230px" height="230px" alt=""></td>
+                                        <td>
+                                            @foreach ($user->roles as  $role)
+                                                 <label > * {{ $role->name }}</label><br>
+                                            @endforeach   
+                                        </td>
                                         <td>{{ $user->phone_number }}</td>
                                         <td>
-                                           
                                             @if ($user->id != Auth::id())
                                                 @can('edit user')
                                                 <a href="{{ route('users.edit', [$user->id]) }}" class="mb-2 btn btn-info mr-2 ">Sửa</a>

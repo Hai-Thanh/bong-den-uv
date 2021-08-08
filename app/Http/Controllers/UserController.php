@@ -49,11 +49,24 @@ class UserController extends Controller
             }
 
             $users = $userQuery->paginate($pagesize)->appends($searchData);
+
         }
+
+        // foreach($users as $user){
+        //     foreach($user->roles as $rol){
+
+        //         print_r($rol->name);
+
+        //     }
+
+        // }
+        // die();
+
+
 
         $data = [];
         $data['name_sort'] = $request->name_sort;
-
+       
         $data['users'] = $users;
         $data['keyword'] = $request->user_name;
 
