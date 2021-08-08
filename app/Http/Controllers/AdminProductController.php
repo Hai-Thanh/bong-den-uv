@@ -139,7 +139,6 @@ class AdminProductController extends Controller
 
     public function edit($id)
     {
-
         $product = $this->product->find($id);
         $htmlOption = $this->getCategory($product->category_id);
         return view('admin.products.edit', compact('htmlOption', 'product'));
@@ -158,10 +157,11 @@ class AdminProductController extends Controller
         try {
             DB::beginTransaction();
             $product = $this->product->find($id);
-            if ($request->image_path  != $product->image_path) {
-                $delete_item = str_replace("http://localhost:8000/storage", '/public', $product->image_path);
-                Storage::delete($delete_item);
-            }
+            
+            // if ($request->image_path  != $product->image_path) {
+            //     $delete_item = str_replace("http://localhost:8000/storage", '/public', $product->image_path);
+            //     Storage::delete($delete_item);
+            // }
 
             $product->update([
                 'name' => $request->name,
@@ -172,7 +172,6 @@ class AdminProductController extends Controller
                 'content' => $request->content,
                 'image_path' => $request->image_path
             ]);
-
 
             $product = $this->product->find($id);
 

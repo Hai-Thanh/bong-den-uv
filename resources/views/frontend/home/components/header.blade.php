@@ -33,17 +33,22 @@
                                         <a href="{{ route('aboutus') }}">About Us</a>
                                     </li>
                                     <li>
-                                        <a href="contact-us">Contact Us</a>
+                                        <a href="{{ route('contact') }}">Contact Us</a>
                                     </li>
+                                 
+                                    
+                                    @php
+                                        $customer_login=  session('customer_login', false);
+                                    @endphp
 
-                                    @if (Auth::check())
+                                    @if ($customer_login != false)
                                         <li class="has-dropdown">
-                                            <a href="{{ route('my.account', ['id' => Auth::id()]) }}">My account </a>
+                                            <a href="{{ route('my.account', ['id' => $customer_login['id']]) }}">My account </a>
                                             <!-- Sub Menu -->
                                         </li>
                                     @else
-                                        <li class="has-dropdown">
-                                            <a href="{{ route('login') }}">Login </a>
+                                        <li>
+                                            <a href="{{ route('login.customers') }}">Login customers</a>
                                         </li>
                                         <li class="has-dropdown">
                                             <a href="{{ route('register') }}">Register </a>

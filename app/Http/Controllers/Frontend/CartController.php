@@ -97,11 +97,13 @@ class CartController extends Controller
 
     public function checkOut(){
 
-
         return view('frontend.carts.checkout');
     }
 
     public function postcheckOut(Request $request){
+
+        $customer_login = session('customer_login');
+
 
         $carts = session()->get('cart');
         $orders = Order::create([
@@ -113,7 +115,8 @@ class CartController extends Controller
             'total_product' => $request->total_product,
             'total_price' =>  $request->total_price,
             'order_status' => 0,
-            'user_id' => Auth::id(),
+            'user_id' => 0,
+            'customer_id' =>$customer_login['id']
         ]);
         
         foreach($carts as $key => $cart ){

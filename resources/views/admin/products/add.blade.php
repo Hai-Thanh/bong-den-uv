@@ -187,11 +187,5 @@
             $(el).parent().parent().remove();
         }
     </script>
-
-
-
-
-
-
 @endsection
 

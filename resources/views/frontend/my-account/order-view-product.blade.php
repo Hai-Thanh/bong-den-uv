@@ -1,6 +1,5 @@
 @extends('frontend.layouts.main')
 @section('content')
-
     <div class="breadcrumb-section breadcrumb-bg-color--golden">
         <div class="breadcrumb-wrapper">
             <div class="container">
@@ -12,7 +11,7 @@
                                 <ul>
                                     <li><a href="{{ route('home') }}">Home</a></li>
                                     <li><a href="{{ route('shop') }}">Shop</a></li>
-                                    <li><a href="{{ route('my.account', ['id'=> Auth::id()]) }}">My account</a></li>
+                                    <li><a href="">My account</a></li>
                                 </ul>
                             </nav>
                         </div>

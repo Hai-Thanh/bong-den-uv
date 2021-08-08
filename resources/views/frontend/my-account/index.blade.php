@@ -24,7 +24,6 @@
         </div>
     </div> <!-- ...:::: End Breadcrumb Section:::... -->
 
-    <!-- ...:::: Start Account Dashboard Section:::... -->
     <div class="account-dashboard">
         <div class="container">
             <div class="row">
@@ -38,11 +37,7 @@
                                     class="nav-link btn btn-block btn-md btn-black-default-hover">Đơn hàng</a></li>
                             <li><a href="#downloads" data-bs-toggle="tab"
                                     class="nav-link btn btn-block btn-md btn-black-default-hover">Đổi mật khẩu</a></li>
-                            @if (Auth::check())
-                            <li><a href="{{ route('dashboard') }}"  
-                                        class="nav-link btn btn-block btn-md btn-black-default-hover">Quản trị viên</a></li>
-                            @endif
-                            <li><a href="{{ route('logout') }}"
+                            <li><a href="{{ route('logout.customers') }}"
                                     class="nav-link btn btn-block btn-md btn-black-default-hover">logout</a></li>
                         </ul>
                     </div>
@@ -52,32 +47,32 @@
                     <div class="tab-content dashboard_content" data-aos="fade-up" data-aos-delay="200">
                         <div class="tab-pane fade show active" id="dashboard">
                             <h3>Hồ sơ của bạn </h4>
-                            @if (Auth::check())
+                        
                             <div style="margin-left:15px" class="login">
                                 <div class="login_form_container">
                                     <div class="account_login_form">
                                         <div class="default-form-box mb-20">
                                             <label>Ảnh của bạn:</label>
-                                            <img  width="200px" height="200px" src="{{ Auth::user()->avatar }}" alt="">
+                                            <img  width="200px" height="200px" src="{{ $customers->avatar }}" alt="">
                                         </div>
                                             <div class="default-form-box mb-20">
-                                                <label>Họ tên của bạn: {{ Auth::user()->name }}</label>
+                                                <label>Họ tên của bạn: {{ $customers->name }}</label>
                                                
                                             </div>
                                             <div class="default-form-box mb-20">
-                                                <label>Email của bạn: {{ Auth::user()->email }}</label>
+                                                <label>Email của bạn: {{ $customers->email }}</label>
                                             </div>
                                             <div class="default-form-box mb-20">
-                                                <label>Số điện thoại:  {{ Auth::user()->phone_number }}</label>
+                                                <label>Số điện thoại:  {{ $customers->phone_number }}</label>
                                             </div>
                                     </div>
                                      
                                 </div>
                             </div>
-                            @endif
-
 
                         </div>
+
+
                         <div class="tab-pane fade" id="orders">
                             <h4>Orders</h4>
                             <h6>Bạn đã đặt : {{ $orders->count() }} đơn hàng.</h6>
@@ -112,7 +107,6 @@
                                                 @elseif ($order->order_status == 5)
                                                 Đã hoàn tiền ( hủy đơn )
                                                 @endif
-                                            
                                             </td>
                                             <td>{{ $order->total_product }} </td>
                                             <td>{{ $order->total_price }} </td>
@@ -125,7 +119,6 @@
                         </div>
                         <div class="tab-pane fade" id="downloads">
                             <h4>Đổi mật khẩu</h4>
-
                         @if (session('status'))
                             <div class="alert alert-success">
                                 {{ session('status') }}
@@ -140,7 +133,7 @@
                             <div class="login">
                                 <div class="login_form_container">
                                     <div class="account_login_form">
-                                        <form action="{{ route('changepassword', ['id'=>$user->id]) }}" method="POST">
+                                        <form action="{{ route('changepassword', ['id'=>$customers->id]) }}" method="POST">
                                             @csrf
                                             <div class="default-form-box mb-20">
                                                 <label>Mật khẩu cũ </label>
@@ -172,8 +165,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                        
                         </div>
                         <div class="tab-pane" id="address">
                             <p>The following addresses will be used on the checkout page by default.</p>

@@ -34,28 +34,29 @@
                 
                         @csrf
                         <h3>Billing Details</h3>
-
-                        @if (Auth::check())
-
+@php
+    $customer_login = session('customer_login');
+   
+@endphp
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="default-form-box">
                                         <label>Nhập họ và tên khách hàng<span>*</span></label>
-                                        <input type="text" value="{{ Auth::user()->name }}" name="customer_name">
+                                        <input type="text" value="{{ $customer_login['name'] }}" name="customer_name">
                                     </div>
                                 </div>
                             
                                 <div class="col-12">
                                     <div class="default-form-box">
                                         <label>Email <span>*</span> </label>
-                                        <input value="{{ Auth::user()->email }}" type="text" name="customer_email">
+                                        <input value="{{ $customer_login['email'] }}" type="text" name="customer_email">
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="default-form-box">
                                         <label>Nhập số điện thoại <span>*</span> </label>
-                                        <input value="{{ Auth::user()->phone_number }}" type="text" name="customer_phone">
+                                        <input value="{{ $customer_login['phone_number'] }}" type="text" name="customer_phone">
                                     </div>
                                 </div>
                                 
@@ -73,7 +74,6 @@
                                     </div>
                                 </div>
                             </div>
-                        @endif
                         @if (session()->get('cart') != null)
                             <div class="payment_method">
                                 <div class="order_button pt-3">

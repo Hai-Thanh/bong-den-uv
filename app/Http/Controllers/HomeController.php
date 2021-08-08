@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UsersRequest;
 use App\Models\Categories;
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Products;
 use App\Models\Slider;
@@ -22,9 +23,9 @@ class HomeController extends Controller
         $users = User::all();
         $slider= Slider::all();
         $orders = Order::all();
+        $customers = Customer::all();
 
-
-        return view('admin.dashboard' , compact('categories', 'orders','products', 'users', 'slider'));
+        return view('admin.dashboard' , compact('categories', 'customers', 'orders','products', 'users', 'slider'));
         
     }
 
@@ -60,36 +61,6 @@ class HomeController extends Controller
         }
         return redirect()->back()->with('msg', 'Sai thông tin đăng nhâp');
     }
-
-
-    public function register(){
-
-        return view('login.register');
-
-    }
-
-    public function postregister(UsersRequest $request){
-       
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'phone_number' => $request->phone_number,
-            'avatar'=> '',
-        ]);
-
-        return redirect()->route('login')->with('status', "Thêm thành viên thành công !");
-
-    }
-
-
-
-
-
-
-
-
-
 
 
 

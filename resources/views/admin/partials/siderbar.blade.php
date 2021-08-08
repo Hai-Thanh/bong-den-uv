@@ -46,7 +46,7 @@
         <li class="nav-item">
           <a class="nav-link  {{ Route::currentRouteNamed('users*') ? 'active' : '' }}"  href="{{ route('users') }}">
             <i class="fab fa-product-hunt"></i>
-            <span>Thành viên</span>
+            <span>Quản trị viên</span>
           </a>
         </li>
         
@@ -75,6 +75,27 @@
           <a class="nav-link {{ Route::currentRouteNamed('posts*') ? 'active' : '' }} "  href="{{ route('posts') }}">
             <i class="fab fa-product-hunt"></i>
             <span>Bài viết</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {{ Route::currentRouteNamed('customers*') ? 'active' : '' }} "  href="{{ route('customers') }}">
+            <i class="fab fa-product-hunt"></i>
+            <span>Khách hàng</span>
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link {{ Route::currentRouteNamed('permission*') ? 'active' : '' }} "  href="{{ route('permission') }}">
+            <i class="fab fa-product-hunt"></i>
+            <span>Permission</span>
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link {{ Route::currentRouteNamed('role*') ? 'active' : '' }} "  href="{{ route('role') }}">
+            <i class="fab fa-product-hunt"></i>
+            <span>Role</span>
           </a>
         </li>
         

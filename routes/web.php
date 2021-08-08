@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\AdminCategoriesController;
+use App\Http\Controllers\AdminCustomerController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\AdminProductController;
@@ -12,11 +13,15 @@ use App\Http\Controllers\Frontend\HomeController as FrontendHomeController;
 use App\Http\Controllers\Frontend\MyaccountController;
 use App\Http\Controllers\Frontend\PostsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginCustomrerAdmin;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
 use App\Models\Slider;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -34,12 +39,13 @@ use Spatie\Permission\Models\Permission;
 
 Route::get('/config/prepare-role-n-permission', function(){
     // Role::create([ 'name' => 'admin']);
- 
     // Role::create(  [ 'name' => 'editor']);
     // Role::create(  [ 'name' => 'moderator']);
 
     // Permission::create(  ['name' => 'add product']  );
     // Permission::create( ['name' => 'remove product'] );
+    // Permission::create( ['name' => 'edit product'] );
+    // Permission::create( ['name' => 'view product'] );
    
     $adminRole =  Role::find(1);
     $editorRole =  Role::find(2);
@@ -52,7 +58,6 @@ Route::get('/config/prepare-role-n-permission', function(){
     $adminRole->givePermissionTo($removeProPer);
 
     $editorRole->givePermissionTo($addProPer);
-
     $modRole->givePermissionTo($removeProPer);
 
     $adminAcc = User::find(7);
@@ -63,6 +68,9 @@ Route::get('/config/prepare-role-n-permission', function(){
     return "done";
 
 });
+
+
+
 
 // giao diện đổ sản phẩm
 Route::get('/', [FrontendHomeController::class,'index'])->name('home'); 
@@ -76,9 +84,9 @@ Route::get('/shop/product-tag/{id}', [FrontendHomeController::class, 'productTag
 Route::post('/search-product', [FrontendHomeController::class, 'shop'])->name('search');
 
 // Phần thông tin tài khoản bên ngoài front end 
-Route::get('/my-account/{id}', [MyaccountController::class, 'index'])->name('my.account')->middleware('auth');
-Route::post('/my-account/change-pasword/{id}', [MyaccountController::class, 'changPassfe'])->name('changepassword')->middleware('auth');;
-Route::get('/order-detail-product/{id}', [MyaccountController::class, 'viewOrderProduct'])->name('order.detail.product')->middleware('auth');;
+Route::get('/my-account/{id}', [MyaccountController::class, 'index'])->name('my.account')->middleware('customersauth');
+Route::post('/my-account/change-pasword/{id}', [MyaccountController::class, 'changPassfe'])->name('changepassword'); 
+Route::get('/order-detail-product/{id}', [MyaccountController::class, 'viewOrderProduct'])->name('order.detail.product'); 
 
 
 // đặt hàng
@@ -87,30 +95,37 @@ Route::get('/add-to-cart-detail/{id}',[CartController::class, 'addCartDetail'] )
 Route::get('/cart', [CartController::class, 'cartList'])->name('carts');
 Route::get('/cart-delete', [CartController::class, 'cartDelete'])->name('delete.cart');
 Route::get('/cart-update', [CartController::class, 'cartUpdate'])->name('update.cart');
-Route::get('/checkout', [CartController::class, 'checkOut'])->name('checkout')->middleware('auth');;
-Route::post('/checkout-post', [CartController::class, 'postcheckOut'])->name('postcheckout')->middleware('auth');;
-Route::get('/checkout/bill', [CartController::class, 'viewBill'])->name('bill')->middleware('auth');;
+Route::get('/checkout', [CartController::class, 'checkOut'])->name('checkout')->middleware('customersauth');
+Route::post('/checkout-post', [CartController::class, 'postcheckOut'])->name('postcheckout')->middleware('customersauth');
+Route::get('/checkout/bill', [CartController::class, 'viewBill'])->name('bill')->middleware('customersauth');
 
 /// đặt hàng
 Route::get('/posts/detail/{id}', [PostsController::class, 'detailPost'])->name('posts.detail');
 Route::get('/posts', [PostsController::class, 'postList'])->name('posts.list');
 Route::get('/aboutus', [PostsController::class, 'aboutus'])->name('aboutus');
+Route::get('/contact', [PostsController::class, 'contact'])->name('contact');
 
 
+// LOGIN CUSTOMERS
+Route::get('/login-customers', [LoginCustomrerAdmin::class, 'loginCustomers'])->name('login.customers');
+Route::post('/post-login-customers', [LoginCustomrerAdmin::class, 'postLoginCustomers'])->name('postlogin.customers');
+Route::get('/logout-customers', [LoginCustomrerAdmin::class, 'logoutCustomer'])->name('logout.customers');
+Route::get('/register', [LoginCustomrerAdmin::class, 'register'])->name('register');
+Route::post('/register', [LoginCustomrerAdmin::class, 'postregister'])->name('postregister');
+// LOGIN CUSTOMERS
 
-
-
+// LOGIN CỦA ADMIN
 Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::post('/login', [HomeController::class, 'postLogin'])->name('postlogin');
-Route::get('/register', [HomeController::class, 'register'])->name('register');
-Route::post('/register', [HomeController::class, 'postregister'])->name('postregister');
+
+// LOGIN CỦA ADMIN
+
 
 Route::get('fake-login/{id}', function($id){  // đăng nhập bằng id kh cần mật khẩu
     $user =User::find($id);
     Auth::login($user);
     return redirect()->route('services');
 });
-
 Route::any('/logout', function(){
     Auth::logout();
     return redirect()->route('login');
@@ -153,6 +168,7 @@ Route::prefix('admin' )->middleware('auth')->group(function(){
 
     });
 
+   
     Route::prefix('slider')->group(function(){
         Route::get('/', [AdminSliderController::class, 'index'])->name('slider');
         Route::get('/add', [AdminSliderController::class, 'add'])->name('slider.add');
@@ -171,7 +187,6 @@ Route::prefix('admin' )->middleware('auth')->group(function(){
         Route::get('/delete/{id}', [AdminSettingController::class, 'delete'])->name('setting.delete');
     });
 
-
     Route::prefix('orders')->group(function(){
         Route::get('/', [AdminOrderController::class, 'index'])->name('orders');
         Route::get('/add', [AdminOrderController::class, 'add'])->name('orders.add');
@@ -182,7 +197,15 @@ Route::prefix('admin' )->middleware('auth')->group(function(){
         Route::post('/searchProduct', [AdminOrderController::class, "searchProduct"])->name('searchProduct');
         Route::post('/ajaxSingleProduct', [AdminOrderController::class, "ajaxSingleProduct"])->name('ajaxSingleProduct');
     });
-    
+
+    Route::prefix('customers')->group(function(){
+        Route::get('/', [AdminCustomerController::class, 'index'])->name('customers');
+        Route::get('/add', [AdminCustomerController::class, 'add'])->name('customers.add');
+        Route::post('/store', [AdminCustomerController::class, 'store'])->name('customers.store');
+        Route::get('/edit/{id}', [AdminCustomerController::class, 'edit'])->name('customers.edit');
+        Route::post('/update/{id}', [AdminCustomerController::class, 'update'])->name('customers.update');
+        Route::get('/delete/{id}', [AdminCustomerController::class, 'delete'])->name('customers.delete');
+    });
 
     Route::prefix('posts')->group(function(){
         Route::get('/', [AdminPostController::class, 'index'])->name('posts');
@@ -192,4 +215,32 @@ Route::prefix('admin' )->middleware('auth')->group(function(){
         Route::post('/update/{id}', [AdminPostController::class, 'update'])->name('posts.update');
         Route::get('/delete/{id}', [AdminPostController::class, 'delete'])->name('posts.delete');
     });
+
+    // Phân quyền saptie
+
+    Route::prefix('permission')->group(function(){
+        Route::get('/', [PermissionController::class, 'index'])->name('permission');
+        Route::get('/add', [PermissionController::class, 'add'])->name('permission.add');
+        Route::post('/store', [PermissionController::class, 'store'])->name('permission.store');
+        Route::get('/edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
+        Route::post('/update/{id}', [PermissionController::class, 'update'])->name('permission.update');
+        Route::get('/delete/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
+    });
+
+
+    Route::prefix('role')->group(function(){
+        Route::get('/', [RolesController::class, 'index'])->name('role');
+        Route::get('/add', [RolesController::class, 'add'])->name('role.add');
+        Route::post('/store', [RolesController::class, 'store'])->name('role.store');
+        Route::get('/edit/{id}', [RolesController::class, 'edit'])->name('role.edit');
+        Route::post('/update/{id}', [RolesController::class, 'update'])->name('role.update');
+        Route::get('/delete/{id}', [RolesController::class, 'delete'])->name('role.delete');
+    });
+
+    
+
+
+
+
+
 });

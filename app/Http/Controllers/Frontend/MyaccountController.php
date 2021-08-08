@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Order;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,15 +13,13 @@ class MyaccountController extends Controller
 {
     public function index($id){
 
-        $user = User::find($id);
-
-        $orders = Order::where('user_id' , $id)->get();
-
-        return view('frontend.my-account.index' ,compact('user', 'orders'));
+        $customers = Customer::find($id);
+        $orders = Order::where('customer_id' , $id)->get();
+        return view('frontend.my-account.index' ,compact('customers', 'orders'));
     }
 
     public function changPassfe(Request $request, $id){
-        $user = User::find($id);
+        $customers = Customer::find($id);
         $request->validate(
             [
                 'password_old' => 'required',
@@ -37,14 +35,14 @@ class MyaccountController extends Controller
         );
 
         $password_confim = Hash::make($request->password_confim);
-        $passwordcheck = Hash::check($request->password_old, $user->password );
+        $passwordcheck = Hash::check($request->password_old, $customers->password );
         if($passwordcheck){
-            $user->update([
+            $customers->update([
                 'password' => $password_confim
             ]);
-            return redirect()->route('my.account', ['id'=>$user->id])->with('status' , "Đổi mật khẩu thành công");
+            return redirect()->route('my.account', ['id'=>$customers->id])->with('status' , "Đổi mật khẩu thành công");
         }
-        return redirect()->route('my.account', ['id'=>$user->id])->with('danger' , "Mật khẩu nhập không chính xác");
+        return redirect()->route('my.account', ['id'=>$customers->id])->with('danger' , "Mật khẩu nhập không chính xác");
     }
 
 

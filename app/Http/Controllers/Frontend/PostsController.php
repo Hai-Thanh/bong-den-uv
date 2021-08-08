@@ -23,9 +23,7 @@ class PostsController extends Controller
     }
 
     public function postList(){
-
         $posts = $this->posts->all();
-
         return view('frontend.posts.list-posts', compact('posts'));
 
     }
@@ -33,9 +31,12 @@ class PostsController extends Controller
     public function aboutus(){
         
         $aboutus = $this->posts->take(1)->get();
-
-
         return view('frontend.posts.aboutus', compact('aboutus'));
 
+    }
+
+    public function contact(){
+
+        return view('frontend.contactus.contact');
     }
 }

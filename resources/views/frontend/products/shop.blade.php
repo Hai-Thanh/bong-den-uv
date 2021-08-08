@@ -19,8 +19,7 @@
             </div>
         </div>
     </div>
-</div> <!-- ...:::: End Breadcrumb Section:::... -->
-
+</div> 
 <!-- ...:::: Start Shop Section:::... -->
 <div class="shop-section">
     <div class="container">
