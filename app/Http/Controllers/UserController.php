@@ -10,12 +10,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
+
+
 
 class UserController extends Controller
 {
-    public function __construct(User $userModel)
+    public function __construct(User $userModel, Role $role)
     {
         $this->user = $userModel;
+        $this->role = $role;
+
     }
 
 
@@ -28,7 +33,6 @@ class UserController extends Controller
         if (count($request->all()) == 0) {
             $users = User::paginate($pagesize);
         } else {
-
             if ($request->user_name) {
                 $userQuery = User::where('name', 'LIKE', "%" . $request->user_name . "%");
             }
@@ -59,30 +63,36 @@ class UserController extends Controller
 
     public function add()
     {
-
-        return view('admin.users.add');
+        $role = $this->role->all();
+        return view('admin.users.add' , compact('role'));
     }
 
     public function store(UsersRequest $request)
     {
-        $this->user->create([
+        $user =   $this->user->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'phone_number' => $request->phone_number,
             'avatar' => $request->avatar
         ]);
+        if($request->has('role')){
+           $user->assignRole($request->role);
+        }
         return redirect()->route('users')->with('status', "Thêm thành viên thành công !");
     }
 
     public function edit($id)
     {
         $user =  $this->user->find($id);
-        return view('admin.users.edit', compact('user'));
+        $role = $this->role->all();
+
+        return view('admin.users.edit', compact('user', 'role'));
     }
 
     public function update($id, UsersRequest $request)
     {
+
         $password = $request->password;
 
         $user =   $this->user->find($id);
@@ -100,8 +110,11 @@ class UserController extends Controller
         if (strlen($password) > 0) {
             $dataUpdate['password'] = Hash::make($password);
         }
-
         $user->update($dataUpdate);
+
+        if($request->has('role')){
+            $user->syncRoles($request->role);
+        }
         return redirect()->route('users')->with('status', "Cập nhật thành viên thành công !");
     }
     public function changePassword($id){

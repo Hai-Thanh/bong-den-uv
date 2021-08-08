@@ -6,18 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
-
+use Spatie\Permission\Models\Permission;
 
 
 class RolesController extends Controller
 {
-    
-
-    public function __construct(Role $role)
+    public function __construct(Role $role , Permission $permission)
     {
         $this->role = $role;
+        $this->permission= $permission;
         $this->middleware('auth');
-        
     }
 
     public function index(){
@@ -28,30 +26,38 @@ class RolesController extends Controller
 
     public function add(){
 
+        $permission = $this->permission->all();
+        return view('admin.spatie.roles.add' , compact('permission'));
 
-        return view('admin.spatie.roles.add');
     }
 
     public function store(Request $request){
-        $this->role->create($request->all());
 
+        $role = $this->role->create([
+            'name' => $request->name
+        ]);
+        if($request->has('permission')){
+            $role->givePermissionTo($request->permission);
+        }
         return redirect()->route('role')->with('status',"Thêm role thành công");
     }
 
     public function edit($id){
-
-    $role = $this->role->find($id);
-
-    return view('admin.spatie.roles.edit', compact('role'));
-
+        $permission = $this->permission->all();
+        $role = $this->role->find($id);
+        return view('admin.spatie.roles.edit', compact('role', 'permission'));
     }
 
 
     public function update($id,Request $request){
-        $this->role->find($id)->update($request->all());
+        $role = $this->role->find($id);
+        $role->update($request->all());
+        if($request->has('permission')){
+            $role->syncPermissions($request->permission);
+        }
+
         return redirect()->route('role')->with('status',"Thêm role thành công");
     }
-
 
     public function delete($id){
         try {

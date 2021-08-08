@@ -27,7 +27,6 @@
                         </a>
                     </div>
                     <br>
-                
                     <div class="card-body p-0 pb-3 text-center">
 
                         <table class="table mb-0">

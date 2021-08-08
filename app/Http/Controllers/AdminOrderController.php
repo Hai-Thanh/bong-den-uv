@@ -118,6 +118,8 @@ class AdminOrderController extends Controller
             ->select('products.id', 'products.name', 'products.image_path', 'order_detail.order_id', 'order_detail.quantity', 'order_detail.product_price')
             ->where('order_detail.order_id', '=', $id)
             ->get();
+
+            
         return view('admin.orders.edit', compact('order', 'productInOrders'));
     }
 

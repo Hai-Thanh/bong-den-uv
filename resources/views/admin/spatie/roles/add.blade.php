@@ -21,6 +21,17 @@
                 <input type="text" name="name" id="iputName" class="form-control" placeholder="Nhập tên role" > 
             </div>
         </div>
+        <label> Chọn quyền </label>
+        <div class="row">
+            @foreach ($permission as  $perm)
+                <div class="col-3">
+                    <input type="checkbox" name="permission[]" value="{{ $perm->id }}">  <span>{{ $perm->name }}</span>
+                </div>  
+             @endforeach
+        </div>
+           
+        <br><br>
+
 
         &nbsp;&nbsp;&nbsp;    
         <button type="submit" class="mb-2 btn btn-success mr-2">Thêm</button>

@@ -11,6 +11,11 @@
 @endsection
 
 
+@section('css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
+
 
 @section('content')
     <div class="main-content-container container-fluid px-4">
@@ -131,6 +136,23 @@
                                                             @enderror 
                                                             </div>
                                                         </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label  class="text-muted d-block mb-2">Chọn quyền cho người dùng</label>
+                                                            <select  name="role[]" class="form-control tags_select2"  multiple="multiple">
+                                                                @foreach ($role as   $roleItem)
+                                                                   <option   
+
+                                                                        @foreach ($user->roles  as  $rolesUse)
+                                                                                {{ $roleItem->id ==  $rolesUse->pivot->role_id ? "selected" : ""}}  
+                                                                        @endforeach
+                                                                        
+                                                                     value="{{ $roleItem->id }}"  >{{ $roleItem->name }}</option>
+                                                                @endforeach
+                                                        
+                                                            </select>
+                                                        </div>
+
                                                     </div>  
                                                     <button type="submit" class="btn btn-accent">Update Account</button>
                                                 </form>

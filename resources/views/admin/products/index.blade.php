@@ -34,12 +34,12 @@
                 <div class="card card-small mb-4">
                     <div class="card-header border-bottom">
                         <h6 class="m-0">Sản phẩm</h6>
-                    @hasanyrole('editor|admin')
+                    @can('add product')
                         <a class="nav-link " href="{{ route('add') }}">
                             <i class="material-icons">note_add</i>
                             <span>Add New Product</span>
                         </a>
-                    @endhasanyrole
+                    @endcan
                     </div>
                     <br>
                     <form name="search_product" method="get" action="{{ htmlspecialchars($_SERVER['REQUEST_URI']) }}">
@@ -125,17 +125,23 @@
                                            </td>
                                            <td></td>
                                             <td>
+                                                @can('edit product')
                                                 <a href="{{ url("admin/products/edit/$product->id") }}"
                                                     class="mb-2 btn btn-info mr-2 ">Sửa</a>
+                                                @endcan
+
+                                                @can('remove product')
                                                 <a href="" data-url="{{ url("admin/products/delete/$product->id") }}"
                                                     class="mb-2 btn btn-danger mr-2 action_delete">Xóa</a>
+                                                @endcan
+                                                
                                             </td>
                                         </tr>
                                     @endforeach
                                 @endif
                             </tbody>
                         </table>
-                     {{ $products->links() }}    
+                       {{ $products->links() }}    
                     </div>
                 </div>
             </div>

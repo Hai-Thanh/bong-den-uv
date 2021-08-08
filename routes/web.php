@@ -135,7 +135,6 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], funct
 });
 
 Route::prefix('admin' )->middleware('auth')->group(function(){
-
     Route::get('/', [HomeController::class  , 'index'])->name('dashboard');
     Route::prefix('categories')->group(function(){
         Route::get('/', [AdminCategoriesController::class, 'index'])->name('categories');
