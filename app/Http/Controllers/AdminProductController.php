@@ -128,7 +128,7 @@ class AdminProductController extends Controller
                 $tagInstance =  $this->tag->firstOrCreate(['name' => $tagItem]);
                 $tagId[] = $tagInstance->id;
             }
-            $product->tagsMutiple()->attach($tagId);
+            $product->tagsMutiple()->attach($tagId);    
             DB::commit();
             return redirect('admin/products/')->with('status', 'Thêm sản phẩm thành công');
         } catch (\Exception $e) {

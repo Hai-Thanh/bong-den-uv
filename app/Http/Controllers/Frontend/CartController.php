@@ -28,8 +28,6 @@ class CartController extends Controller
             ];
         }
         session()->put('cart', $carts);
-
-
         return response()->json([
             'code' => 200,
             'message' => 'success'
@@ -103,7 +101,6 @@ class CartController extends Controller
     public function postcheckOut(Request $request){
 
         $customer_login = session('customer_login');
-
 
         $carts = session()->get('cart');
         $orders = Order::create([

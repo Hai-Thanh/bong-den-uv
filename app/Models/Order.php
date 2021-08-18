@@ -13,13 +13,10 @@ class Order extends Model
     protected $table = 'orders';
     protected $primaryKey = 'id';
     protected $guarded = [];
-    
 
 
     public function productOrder(){
         return $this->belongsToMany(Products::class, 'order_detail', 'order_id' , 'product_id');
     }
-
-
 
 }
