@@ -26,18 +26,17 @@ class ProductsFactory extends Factory
      */
     public function definition()
     {
-
-        // $imgName = $this->faker->image(storage_path("app/public/storage/product"), $width = 640, $height = 480, false);
+        $categories = Categories::all();
 
         return [
             'name' => $this->faker->name(),
-            'category_id' =>Categories::all()->random()->id,
+            'category_id' => $categories->isNotEmpty() ? $categories->random()->id : null, // Hoặc giá trị mặc định
             'feature_image_path' => 'https://picsum.photos/640/480',
             'feature_image_name' => 'https://picsum.photos/640/480',
-            'price' =>rand(1,500),
-            'status' => rand(0,3),
-            'quantity'=>rand(1,300) ,
-            'content'=>$this->faker->paragraph,
+            'price' => rand(1, 500),
+            'status' => rand(0, 3),
+            'quantity' => rand(1, 300),
+            'content' => $this->faker->paragraph,
         ];
     }
 }

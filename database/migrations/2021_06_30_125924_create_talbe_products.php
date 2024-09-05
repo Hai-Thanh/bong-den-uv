@@ -15,15 +15,17 @@ class CreateTalbeProducts extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->unsignedBigInteger('category_id');
-            $table->string('price');
-            $table->string('image_path')->nullable();
-            $table->string('status');
-            $table->string('quantity');
-            $table->text('content');
+            $table->string('name');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->string('feature_image_path')->nullable(); // Đảm bảo cột này tồn tại
+            $table->string('feature_image_name')->nullable();
+            $table->decimal('price', 8, 2)->nullable();
+            $table->string('image_path')->default('default-image.jpg');
+            $table->string('status')->nullable();
+            $table->string('quantity')->nullable();
+            $table->text('content')->nullable();
             $table->timestamps();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+//            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

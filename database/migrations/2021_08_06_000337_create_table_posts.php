@@ -16,7 +16,7 @@ class CreateTablePosts extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('image_path');
+            $table->string('image_path')->default('default-image.jpg');
             $table->text('content');
             $table->integer('user_id');
             $table->timestamps();

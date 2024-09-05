@@ -9,12 +9,13 @@ use Illuminate\Support\Facades\Log;
 
 class PermissionController extends Controller
 {
-   
+
     public function __construct(Permission $permission)
     {
         $this->permission = $permission;
+
         $this->middleware('auth');
-        
+
     }
 
     public function index(){
@@ -28,11 +29,11 @@ class PermissionController extends Controller
 
         return view('admin.spatie.permission.add');
     }
-    
+
     public function store(Request $request){
 
         $this->permission->create($request->all());
-    
+
         return redirect()->route('permission')->with('status', 'Thêm permission thành công');
     }
 

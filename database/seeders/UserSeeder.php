@@ -25,13 +25,13 @@ class UserSeeder extends Seeder
                 ],
 
                 [
-                    'name' =>"Lê Duy Trương",
-                    'email'=>"truongldph11925@fpt.edu.vn",
-                    'password'=>'123456789',
+                    'name' =>"admin",
+                    'email'=>"admin@gmail.com",
+                    'password'=>'12345678',
                     'phone_number' => '0362821173'
                 ]
             ];
-      
+
         foreach($data as $item){
             $user =  new User();
             $user->name = $item['name'];
@@ -40,9 +40,7 @@ class UserSeeder extends Seeder
             $user->phone_number= $item['phone_number'];
             $user->save();
         }
+        \App\Models\User::create($data)->save();
 
-
-
-        
     }
 }

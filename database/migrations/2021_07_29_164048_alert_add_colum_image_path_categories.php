@@ -14,8 +14,8 @@ class AlertAddColumImagePathCategories extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->string('image_path');
-            
+            $table->string('image_path')->default('default-image.jpg');
+
         });
     }
 
